@@ -199,6 +199,10 @@ output "instance_id" {
   value = aws_spot_instance_request.windows_instance.id
 }
 
+output "spot_instance_id" {
+  value = aws_spot_instance_request.windows_instance.spot_instance_id
+}
+
 output "instance_ip" {
   value = aws_spot_instance_request.windows_instance.public_ip
 }
