@@ -92,6 +92,38 @@ resource "aws_security_group_rule" "default" {
   security_group_id = aws_security_group.default.id
 }
 
+# Allow steam stream
+resource "aws_security_group_rule" "steam_stream_udp_ingress" {
+  type = "ingress"
+  description = "Allow Steam Streaming connections (port UDP 27031-270036)"
+  from_port = 27031
+  to_port = 27036
+  protocol = "udp"
+  cidr_blocks = ["${data.external.local_ip.result.address}/32"]
+  security_group_id = aws_security_group.default.id
+}
+
+resource "aws_security_group_rule" "steam_stream_tcp_ingress" {
+  type = "ingress"
+  description = "Allow Steam Streaming connections (port TCP 27036-270037)"
+  from_port = 27036
+  to_port = 27037
+  protocol = "tcp"
+  cidr_blocks = ["${data.external.local_ip.result.address}/32"]
+  security_group_id = aws_security_group.default.id
+}
+
+# VR Desktop
+resource "aws_security_group_rule" "virtual_desktop_tcp_ingress" {
+  type = "ingress"
+  description = "Allow Virtual Desktop Streaming connections (port TCP 38810-38840)"
+  from_port = 38810
+  to_port = 38840
+  protocol = "tcp"
+  cidr_blocks = ["${data.external.local_ip.result.address}/32"]
+  security_group_id = aws_security_group.default.id
+}
+
 resource "aws_iam_role" "windows_instance_role" {
   name = "cloud-gaming-instance-role"
   assume_role_policy = <<EOF
